@@ -1,2 +1,2 @@
-# Create1EncryptView
-Create1EncryptView
+# 一次加密VIEW勾稽外來人士統一證號異動檔整理
+先至VDI內整理出"一次加密VIEW勾稽外來人士統一證號異動檔"的excel表再請user寄出
