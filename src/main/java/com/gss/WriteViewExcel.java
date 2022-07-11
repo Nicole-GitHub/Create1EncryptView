@@ -204,7 +204,10 @@ public class WriteViewExcel {
 				cellNum = 0;
 				row = sheet.createRow(rowNum++);
 				Tools.setCell(defStyle, cell, row, cellNum++, "");
-				Tools.setCell(defStyle, cell, row, cellNum++, String.valueOf(rowNum-2));
+//				Tools.setCell(defStyle, cell, row, cellNum++, String.valueOf(rowNum-2));
+				cell = row.createCell(cellNum++);
+				cell.setCellFormula("ROW()-2");
+				cell.setCellStyle(defStyle);
 				Tools.setCell(defStyle, cell, row, cellNum++, "DW");
 				Tools.setCell(defStyle, cell, row, cellNum++, "Alter");
 				Tools.setCell(defStyle, cell, row, cellNum++, "procedure");
