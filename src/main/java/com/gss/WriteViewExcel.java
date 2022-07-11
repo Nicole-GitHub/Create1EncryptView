@@ -168,10 +168,11 @@ public class WriteViewExcel {
 				joinNumStr = map.get("JoinNum");
 				fileContent += " LEFT JOIN ( select distinct ID,NEW_ID,NEW_ID_JOIN from nhiadm.DWU_FOREIGN_ID_MAP) T" + joinNumStr
 						+ " on T1." + joinColName.substring(0, joinColName.indexOf("_JOIN")) + " = T" + joinNumStr
-						+ ".ID ;\n";
+						+ ".ID \n";
 			}
 		}
-
+		fileContent += ";";
+		
 		FileTools.createFile(outputPath, tableViewName, "sql", fileContent);
 	}
 
