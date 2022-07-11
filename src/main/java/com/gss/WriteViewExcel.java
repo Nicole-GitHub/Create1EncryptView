@@ -112,7 +112,7 @@ public class WriteViewExcel {
 				if (!tableOldName.equals(tableNewName)) {
 					tableOldViewName = "V_" + tableOldName + "_REPID";
 					tableNewViewName = "V_" + tableNewName + "_REPID";
-					// 組完最後的left join
+
 					if (!"".equals(tableOldName))
 						FileTools.createFile(outputPath, tableOldViewName, "sql", sql);
 
@@ -161,12 +161,12 @@ public class WriteViewExcel {
 	private static void writeFile(String sql, String tableOldName, String tableViewName,
 			List<Map<String, String>> isIDColList, String outputPath) {
 		String joinColName = "", joinNumStr = "";
-		String fileContent = sql + "\nFROM " + tableOldName + " T1 LEFT JOIN \n";
+		String fileContent = sql + "\nFROM " + tableOldName + " T1 \n";
 		for (Map<String, String> map : isIDColList) {
 			joinColName = map.get("ColName");
 			if (joinColName.contains("_JOIN")) {
 				joinNumStr = map.get("JoinNum");
-				fileContent += "( select distinct ID,NEW_ID,NEW_ID_JOIN from nhiadm.DWU_FOREIGN_ID_MAP) T" + joinNumStr
+				fileContent += " LEFT JOIN ( select distinct ID,NEW_ID,NEW_ID_JOIN from nhiadm.DWU_FOREIGN_ID_MAP) T" + joinNumStr
 						+ " on T1." + joinColName.substring(0, joinColName.indexOf("_JOIN")) + " = T" + joinNumStr
 						+ ".ID ;\n";
 			}
