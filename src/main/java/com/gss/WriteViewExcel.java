@@ -161,7 +161,7 @@ public class WriteViewExcel {
 	private static void writeFile(String sql, String tableOldName, String tableViewName,
 			List<Map<String, String>> isIDColList, String outputPath) {
 		String joinColName = "", joinNumStr = "";
-		String fileContent = sql + "\nFROM " + tableOldName + " T1 \n";
+		String fileContent = sql + "\nFROM nhiadm." + tableOldName + " T1 \n";
 		for (Map<String, String> map : isIDColList) {
 			joinColName = map.get("ColName");
 			if (joinColName.contains("_JOIN")) {

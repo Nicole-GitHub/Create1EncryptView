@@ -1,6 +1,7 @@
 package com.gss;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -23,7 +24,10 @@ public class Parser {
 		List<Map<String, String>> listIDDetail = new LinkedList<Map<String, String>>();
 		Map<String, String> map = null;
 		Map<String, String> idMap = null;
-
+		
+		List<String> colPRN_ID = Arrays.asList(new String[] {"PRSN_ID","PRN_ID"});
+		List<String> colPRN_ID_JOIN = Arrays.asList(new String[] {"PRSN_ID_JOIN","PRN_ID_JOIN"});
+		
 		try {
 			workbook = Tools.getWorkbook(path);
 			Sheet sheetTableColumn = workbook.getSheet("Table Column List");
@@ -54,7 +58,11 @@ public class Parser {
 					// 判斷是否為id
 					for (Map<String, String> listIDDetailMap : listIDDetail) {
 						if (tableName.equals(listIDDetailMap.get("TableName"))
-								&& columnName.equals(listIDDetailMap.get("ColumnName"))) {
+								&& (columnName.equals(listIDDetailMap.get("ColumnName"))
+										|| (colPRN_ID.contains(columnName)
+												&& colPRN_ID.contains(listIDDetailMap.get("ColumnName")))
+										|| (colPRN_ID_JOIN.contains(columnName)
+												&& colPRN_ID_JOIN.contains(listIDDetailMap.get("ColumnName"))))) {
 							isID = true;
 							break;
 						}
