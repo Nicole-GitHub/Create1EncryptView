@@ -23,8 +23,8 @@ public class WriteMDSql {
 				// 是否為新table
 				if (!tableOldName.equals(tableNewName)) {
 					insTableSql += "insert into md_table " 
-							+ "select SYSTEM_TYPE, DATA_TYPE, '" + tableNewViewName + "', TABLECNM||'(含新ID)', 'V', IMPORT_FRQ, 'Y', "
-							+ "DATA_LIMITED, AUTHORIZE, RESERVE_TIME, RESERVE_TYPE, RESERVE_FLOAT, RESERVE_FIELDNM, TRANSFER_TYPE, "
+							+ "select SYSTEM_TYPE, DATA_TYPE, '" + tableNewViewName + "', TABLECNM||'(含新ID)', 'V', IMPORT_FRQ, ACCESS_LIMITED, "
+							+ "'Y', AUTHORIZE, RESERVE_TIME, RESERVE_TYPE, RESERVE_FLOAT, RESERVE_FIELDNM, TRANSFER_TYPE, "
 							+ "RESERVE_STATUS, DATA_SOURCE, BUSINESS_PURP, DATA_MEAN||'，並勾稽外來人口統一證號異動對照檔', OTHERS, FILE_LOGIC, APPLY_PIC, "
 							+ "'GSS3526', sysdate, 'Y' "
 							+ "from md_table where tablenm = '" + tableNewName + "'; \n";
