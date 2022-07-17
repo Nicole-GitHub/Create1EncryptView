@@ -79,12 +79,12 @@ public class WriteMDSql {
 				}
 			}
 
-			FileTools.createFile(outputPath, "1_InsTableSql", "sql", insTableSql);
-			FileTools.createFile(outputPath, "2_InsFieldSql", "sql", insFieldSql);
-			FileTools.createFile(outputPath, "3_InsFieldOrigSql", "sql", insFieldOrigSql);
-			FileTools.createFile(outputPath, "4_UpdFieldIDSql", "sql", updFieldIDSql);
-			FileTools.createFile(outputPath, "5_InsTableVerSql", "sql", insTableVerSql);
-			FileTools.createFile(outputPath, "6_InsFieldVerSql", "sql", insFieldVerSql);
+			FileTools.createFile(outputPath, "1_InsTableSql", "sql", insTableSql += "\nCOMMIT; \n");
+			FileTools.createFile(outputPath, "2_InsFieldSql", "sql", insFieldSql += "\nCOMMIT; \n");
+			FileTools.createFile(outputPath, "3_InsFieldOrigSql", "sql", insFieldOrigSql += "\nCOMMIT; \n");
+			FileTools.createFile(outputPath, "4_UpdFieldIDSql", "sql", updFieldIDSql += "\nCOMMIT; \n");
+			FileTools.createFile(outputPath, "5_InsTableVerSql", "sql", insTableVerSql += "\nCOMMIT; \n");
+			FileTools.createFile(outputPath, "6_InsFieldVerSql", "sql", insFieldVerSql += "\nCOMMIT; \n");
 			
 			List<String> fieldNameArr = Arrays.asList(new String[] { "1_InsTableSql", "2_InsFieldSql",
 					"3_InsFieldOrigSql", "4_UpdFieldIDSql", "5_InsTableVerSql", "6_InsFieldVerSql" });
