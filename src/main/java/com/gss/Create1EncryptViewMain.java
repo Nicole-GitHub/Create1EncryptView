@@ -49,11 +49,15 @@ public class Create1EncryptViewMain {
 		fileNamePath = path2folder + fileNamePath;
 
 		// Build Sample
-		String iqPath = path + mapProp.get("buildSample") + mapProp.get("iqPath");
+		String buildSample = path + mapProp.get("buildSample");
+		String iqPath = buildSample + mapProp.get("iqPath");
+		String oraclePath = buildSample + mapProp.get("oraclePath");
 		// 建置用
 		String outputPathBuild = path2folder + mapProp.get("outputPathBuild");
 		// 資料倉儲SybaseIQ(DB)建置表單
 		String outputPathBuildIQ = outputPathBuild + mapProp.get("outputPathBuildIQ");
+		// 資料倉儲SybaseIQ(DB)建置表單
+		String outputPathBuildOracle = outputPathBuild + mapProp.get("outputPathBuildOracle");
 
 		System.out.println(""
 				+ "\n,path2folder:\t" + path2folder
@@ -64,7 +68,7 @@ public class Create1EncryptViewMain {
 
 		List<List<Map<String, String>>> list = Parser.runParser(fileNamePath);
 		WriteViewExcel.write(iqPath, outputPathBuildIQ, list);
-		WriteMDSql.write(outputPathBuild, list);
+		WriteMDSql.write(oraclePath, outputPathBuildOracle, list);
 		
 		System.out.println("=== 已完成! ===");
 	}

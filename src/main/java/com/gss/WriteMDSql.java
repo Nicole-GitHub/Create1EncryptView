@@ -1,12 +1,22 @@
 package com.gss;
 
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Hyperlink;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 
 public class WriteMDSql {
 	private static final String className = WriteViewExcel.class.getName();
 
-	public static void write(String outputPath, List<List<Map<String, String>>> list) {
+	public static void write(String oraclePath, String outputPath, List<List<Map<String, String>>> list) {
 
 		String insTableSql = "", insFieldSql = "", insFieldOrigSql = "", updFieldIDSql = "", insTableVerSql = "",
 				insFieldVerSql = "", tableOldName = "", tableNewName = "", columnName = "", isID = "",
@@ -69,15 +79,83 @@ public class WriteMDSql {
 				}
 			}
 
-			FileTools.createFile(outputPath, "1 InsTableSql", "sql", insTableSql);
-			FileTools.createFile(outputPath, "2 InsFieldSql", "sql", insFieldSql);
-			FileTools.createFile(outputPath, "3 InsFieldOrigSql", "sql", insFieldOrigSql);
-			FileTools.createFile(outputPath, "4 UpdFieldIDSql", "sql", updFieldIDSql);
-			FileTools.createFile(outputPath, "5 InsTableVerSql", "sql", insTableVerSql);
-			FileTools.createFile(outputPath, "6 InsFieldVerSql", "sql", insFieldVerSql);
-
+			FileTools.createFile(outputPath, "1_InsTableSql", "sql", insTableSql);
+			FileTools.createFile(outputPath, "2_InsFieldSql", "sql", insFieldSql);
+			FileTools.createFile(outputPath, "3_InsFieldOrigSql", "sql", insFieldOrigSql);
+			FileTools.createFile(outputPath, "4_UpdFieldIDSql", "sql", updFieldIDSql);
+			FileTools.createFile(outputPath, "5_InsTableVerSql", "sql", insTableVerSql);
+			FileTools.createFile(outputPath, "6_InsFieldVerSql", "sql", insFieldVerSql);
+			
+			List<String> fieldNameArr = Arrays.asList(new String[] { "1_InsTableSql", "2_InsFieldSql",
+					"3_InsFieldOrigSql", "4_UpdFieldIDSql", "5_InsTableVerSql", "6_InsFieldVerSql" });
+			
+			buildOracle(oraclePath, outputPath, fieldNameArr);
 		} catch (Exception ex) {
 			throw new RuntimeException(className + " write Error: \n" + ex);
+		}
+	}
+	
+	/**
+	 * 建立ORACLE建置單
+	 * 
+	 * @param oraclePath
+	 * @param outputPathBuild
+	 * @param tableNewViewNameArr
+	 */
+	private static void buildOracle(String oraclePath, String outputPathBuild, List<String> fieldNameArr) {
+
+		Workbook workbook = Tools.getWorkbook(oraclePath);
+		Sheet sheet = workbook.getSheetAt(0);
+		CreationHelper createHelper = workbook.getCreationHelper();
+		Row row = null;
+		Cell cell = null;
+		Hyperlink link = null;
+
+		try {
+			CellStyle defStyle = Tools.getStyle(workbook);
+			CellStyle hLinkStyle = Tools.getStyleHLink(workbook);
+
+			int rowNum = 2;
+			int cellNum = 0;
+			for (String fieldName : fieldNameArr) {
+				cellNum = 0;
+				row = sheet.createRow(rowNum++);
+				Tools.setCell(defStyle, cell, row, cellNum++, "");
+				cell = row.createCell(cellNum++);
+				cell.setCellFormula("ROW()-2");
+				cell.setCellStyle(defStyle);
+				Tools.setCell(defStyle, cell, row, cellNum++, "SC");
+				Tools.setCell(defStyle, cell, row, cellNum++, "Alter");
+				Tools.setCell(defStyle, cell, row, cellNum++, "Table");
+				Tools.setCell(defStyle, cell, row, cellNum++, fieldName);
+				Tools.setCell(defStyle, cell, row, cellNum++, "");
+
+				// 相關檔案
+				cell = row.createCell(cellNum++);
+				cell.setCellValue(fieldName + ".sql");
+				link = (Hyperlink) createHelper.createHyperlink(Hyperlink.LINK_FILE);
+				link.setAddress("http://192.168.102.12/scms/med2table/" + fieldName + ".sql");
+				cell.setHyperlink(link);
+				cell.setCellStyle(hLinkStyle);
+
+				Tools.setCell(defStyle, cell, row, cellNum++, "");
+				Tools.setCell(defStyle, cell, row, cellNum++, "");
+			}
+
+			String outputFileBuild = outputPathBuild.substring(
+					outputPathBuild.lastIndexOf("/", outputPathBuild.lastIndexOf("/") - 1) + 1,
+					outputPathBuild.length() - 1) + ".xls";
+
+			Tools.output(workbook, outputPathBuild, outputFileBuild);
+		} catch (Exception ex) {
+			throw new RuntimeException(className + " write Error: \n" + ex);
+		} finally {
+			try {
+				if (workbook != null)
+					workbook.close();
+			} catch (IOException ex) {
+				throw new RuntimeException(className + " finally Error: \n" + ex);
+			}
 		}
 	}
 }
