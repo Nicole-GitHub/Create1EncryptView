@@ -66,9 +66,14 @@ public class Create1EncryptViewMain {
 				+ "\n"
 				);
 
+		/**
+		 * list.get(0) : Table Column List(含IsID)
+		 * list.get(1) : GRANT
+		 */
 		List<List<Map<String, String>>> list = Parser.runParser(fileNamePath);
 		WriteViewExcel.write(iqPath, outputPathBuildIQ, list);
 		WriteMDSql.write(oraclePath, outputPathBuildOracle, list);
+		WriteRCPT.write(path2folder, list);
 		
 		System.out.println("=== 已完成! ===");
 	}
