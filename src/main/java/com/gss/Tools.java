@@ -14,6 +14,7 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -106,16 +107,32 @@ public class Tools {
 	}
 
 	/**
-	 * 設定寫出檔案時的Style (粗紅字體)
+	 * 設定寫出檔案時的Style (紅字體)
 	 */
 	protected static CellStyle getStyleRed(Workbook workbook) {
 		Font font = workbook.createFont();
-		font.setFontHeightInPoints((short) 14);
 		font.setColor(Font.COLOR_RED);
 		font.setBold(true);
 		font.setFontName("微軟正黑體");
 
-		CellStyle style = workbook.createCellStyle();
+		CellStyle style = getStyle(workbook);
+		style.setFont(font);
+		
+		return style;
+	}
+	
+	/**
+	 * 設定寫出檔案時的Style (灰底、粗字體、置中)
+	 */
+	protected static CellStyle getStyleTitle(Workbook workbook) {
+		Font font = workbook.createFont();
+		font.setBold(true);
+		font.setFontName("微軟正黑體");
+
+		CellStyle style = getStyle(workbook);
+		style.setFillPattern(CellStyle.SOLID_FOREGROUND); // Cell背景色需搭配此行才會有效果
+		style.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.index); // Cell背景色
+		style.setAlignment(CellStyle.ALIGN_CENTER); //置中
 		style.setFont(font);
 		return style;
 	}

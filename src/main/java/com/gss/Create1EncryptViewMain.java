@@ -73,7 +73,7 @@ public class Create1EncryptViewMain {
 		List<List<Map<String, String>>> list = Parser.runParser(fileNamePath);
 		WriteViewExcel.write(iqPath, outputPathBuildIQ, list);
 		WriteMDSql.write(oraclePath, outputPathBuildOracle, list);
-		WriteRCPT.write(path2folder, list);
+		WriteRCPT.write(outputPathBuild, list, folderName);
 		
 		System.out.println("=== 已完成! ===");
 	}

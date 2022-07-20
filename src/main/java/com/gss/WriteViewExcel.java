@@ -22,6 +22,7 @@ public class WriteViewExcel {
 
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		CellStyle cellStyle = Tools.getStyle(workbook);
+		CellStyle cellStyleTitle = Tools.getStyleRed(workbook);
 		Sheet sheet = null;
 		Cell cell = null;
 		Row row = null;
@@ -64,7 +65,7 @@ public class WriteViewExcel {
 					joinNum = 2;
 					rowNum = 0;
 					row = sheet.createRow(rowNum++);
-					Tools.setCell(Tools.getStyleRed(workbook), cell, row, cellNum, "Column");
+					Tools.setCell(cellStyleTitle, cell, row, cellNum, "Column");
 				}
 				tableOldName = tableNewName;
 				row = sheet.createRow(rowNum++);
@@ -122,7 +123,7 @@ public class WriteViewExcel {
 					rowNum = sheet.getLastRowNum() + 1;
 					row = sheet.createRow(rowNum++); // 讓column 與 grant 之間多空一行
 					row = sheet.createRow(rowNum++);
-					Tools.setCell(Tools.getStyleRed(workbook), cell, row, cellNum, "GRANT");
+					Tools.setCell(cellStyleTitle, cell, row, cellNum, "GRANT");
 				}
 				tableOldName = tableNewName;
 				row = sheet.createRow(rowNum++);
