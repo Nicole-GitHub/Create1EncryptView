@@ -104,6 +104,7 @@ public class WriteViewExcel {
 
 			// GRANT
 			String grantee = "";
+			tableOldName = "";
 			for (Map<String, String> listDetail : list.get(1)) {
 				cellNum = 0;
 				tableNewName = listDetail.get("TableName");
