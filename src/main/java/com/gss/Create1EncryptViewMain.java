@@ -22,7 +22,7 @@ public class Create1EncryptViewMain {
 			path = os.contains("Mac") ? "/Users/nicole/Dropbox/ETL/RUN_BAT/" // Mac
 					: "C:/Users/Nicole/Dropbox/ETL/RUN_BAT/"; // win
 			folderName = "1110705_002 一次加密VIEW勾稽外來人士統一證號異動檔";
-			fileNamePath = "一次加密VIEW表勾稽外來人口.xlsx";
+			fileNamePath = "一次加密VIEW表勾稽外來人口_DWM_COPD_DATA.xlsx";
 		}
 
 		/**
