@@ -86,8 +86,8 @@ public class WriteRCPT {
 			}
 
 			idCol = idCol.substring(0, idCol.lastIndexOf(","));
-			selMDSql += idCol + ") \n) a \nORDER BY TNAME, CNAME ; \n";
-			selIQSql += idCol + ") \n) a \nORDER BY TABLENM, FIELD_LOGIC, FIELDNM ; \n";
+			selMDSql += idCol + ") \n) a \nORDER BY TABLENM, FIELD_LOGIC, FIELDNM ; \n";
+			selIQSql += idCol + ") \n) a \nORDER BY TNAME, CNAME ; \n";
 			selCntSql = selCntSql.substring(0, selCntSql.lastIndexOf("UNION")) + "; \n";
 			
 			FileTools.createFile(outputPath, "selMDSql", "sql", selMDSql);
